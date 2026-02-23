@@ -82,7 +82,7 @@ const FormatDirectory = () => {
       <Helmet>
         <title>Outdoor Media Buying London | OOH Advertising Briefs & Campaign Planning</title>
         <meta name="description" content="Outdoor media buying in London with instant brief submissions and a dedicated client portal. Access all OOH channels and receive a full media schedule with precise locations." />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/outdoor-media" />
+        {/* Canonical managed by SchemaManager */}
         <meta name="robots" content="index,follow" />
       </Helmet>
       

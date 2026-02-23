@@ -169,7 +169,7 @@ const ShoppingMallAdvertising = () => {
           name="description" 
           content="Shopping mall advertising in London's premium retail destinations. Target purchase-ready audiences at Westfield, Brent Cross, Canary Wharf, and more. Get quote today." 
         />
-        <link rel="canonical" href="https://reactivemedia.co.uk/ooh/shopping-mall-advertising" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <main className="min-h-screen bg-background">

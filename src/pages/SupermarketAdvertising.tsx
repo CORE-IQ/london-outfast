@@ -29,7 +29,7 @@ const SupermarketAdvertising = () => {
       "provider": {
         "@type": "Organization",
         "name": "Media Buying London",
-        "url": "https://www.mediabuyinglondon.co.uk"
+        "url": "https://mediabuyinglondon.co.uk"
       },
       "areaServed": {
         "@type": "City",
@@ -43,7 +43,7 @@ const SupermarketAdvertising = () => {
       ],
       "offers": {
         "@type": "Offer",
-        "url": "https://www.mediabuyinglondon.co.uk/ooh/supermarket-advertising",
+        "url": "https://mediabuyinglondon.co.uk/ooh/supermarket-advertising",
         "priceCurrency": "GBP",
         "availability": "https://schema.org/InStock"
       }
@@ -157,7 +157,7 @@ const SupermarketAdvertising = () => {
           name="description" 
           content="Supermarket advertising in London across Tesco, Asda, Sainsbury's, and Morrisons. Digital 6-Sheets, trolley advertising, aisle-end panels. Point-of-purchase dominance." 
         />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/ooh/supermarket-advertising" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <main className="min-h-screen bg-background">

@@ -26,7 +26,7 @@ const CityPosters = () => {
       "provider": {
         "@type": "Organization",
         "name": "Media Buying London",
-        "url": "https://www.mediabuyinglondon.co.uk"
+        "url": "https://mediabuyinglondon.co.uk"
       },
       "areaServed": {
         "@type": "City",
@@ -40,7 +40,7 @@ const CityPosters = () => {
       ],
       "offers": {
         "@type": "Offer",
-        "url": "https://www.mediabuyinglondon.co.uk/ooh/city-posters-london",
+        "url": "https://mediabuyinglondon.co.uk/ooh/city-posters-london",
         "priceCurrency": "GBP",
         "availability": "https://schema.org/InStock"
       }
@@ -152,7 +152,7 @@ const CityPosters = () => {
           name="description" 
           content="City poster advertising across London including Shoreditch, Soho, Camden, Brixton. 4-sheet, 6-sheet, flyposting walls, vinyl wraps. Street-level cultural targeting." 
         />
-        <link rel="canonical" href="https://reactivemedia.co.uk/ooh/city-posters-london" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <main className="min-h-screen bg-background">

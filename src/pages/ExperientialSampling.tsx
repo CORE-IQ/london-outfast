@@ -30,7 +30,7 @@ const ExperientialSampling = () => {
       "provider": {
         "@type": "Organization",
         "name": "Media Buying London",
-        "url": "https://www.mediabuyinglondon.co.uk"
+        "url": "https://mediabuyinglondon.co.uk"
       },
       "areaServed": {
         "@type": "City",
@@ -44,7 +44,7 @@ const ExperientialSampling = () => {
       ],
       "offers": {
         "@type": "Offer",
-        "url": "https://www.mediabuyinglondon.co.uk/ooh/experiential-sampling-london",
+        "url": "https://mediabuyinglondon.co.uk/ooh/experiential-sampling-london",
         "priceCurrency": "GBP",
         "availability": "https://schema.org/InStock"
       }
@@ -148,7 +148,7 @@ const ExperientialSampling = () => {
           name="description" 
           content="Experiential marketing and product sampling activations across London. Pop-up events, brand experiences at transport hubs, shopping centres. Get quote today." 
         />
-        <link rel="canonical" href="https://reactivemedia.co.uk/ooh/experiential-sampling-london" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <main className="min-h-screen bg-background">

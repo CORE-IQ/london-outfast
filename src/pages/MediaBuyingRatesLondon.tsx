@@ -16,7 +16,7 @@ const MediaBuyingRatesLondon = () => {
         <title>Media Buying Rates London – What You Need to Know | Media Buying London</title>
         <meta name="description" content="A practical guide to media buying rates in London across OOH, digital and cinema; how agencies charge; and how Media Buying London's client-portal transparent invoicing proves real market value." />
         <meta name="keywords" content="media buying rates london, ooh advertising london, billboard rates london, digital advertising costs london, agency commission media buying" />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/media-buying-rates-london" />
+        {/* Canonical managed by SchemaManager */}
         
         {/* Open Graph */}
         <meta property="og:title" content="Media Buying Rates London – What You Need to Know" />

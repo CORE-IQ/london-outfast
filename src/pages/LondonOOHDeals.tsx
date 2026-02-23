@@ -319,7 +319,7 @@ const LondonOOHDeals = () => {
           name="description" 
           content="Grab hand-picked London out-of-home deals that end every Friday at 4pm. D48, D6, Bus, London Underground and more—real rate-card savings, limited availability." 
         />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/london-ooh-deals" />
+        {/* Canonical managed by SchemaManager */}
         
         {/* JSON-LD Schema */}
         <script type="application/ld+json">

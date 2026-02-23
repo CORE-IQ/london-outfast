@@ -29,7 +29,7 @@ const StreetFurniture = () => {
       "provider": {
         "@type": "Organization",
         "name": "Media Buying London",
-        "url": "https://www.mediabuyinglondon.co.uk"
+        "url": "https://mediabuyinglondon.co.uk"
       },
       "areaServed": {
         "@type": "City",
@@ -43,7 +43,7 @@ const StreetFurniture = () => {
       ],
       "offers": {
         "@type": "Offer",
-        "url": "https://www.mediabuyinglondon.co.uk/ooh/street-furniture",
+        "url": "https://mediabuyinglondon.co.uk/ooh/street-furniture",
         "priceCurrency": "GBP",
         "availability": "https://schema.org/InStock"
       }
@@ -133,7 +133,7 @@ const StreetFurniture = () => {
           name="description" 
           content="Street furniture advertising in London including phone kiosks, recycling bins, benches, information panels. Community-level targeting or citywide coverage. Get quote today." 
         />
-        <link rel="canonical" href="https://reactivemedia.co.uk/ooh/street-furniture" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <main className="min-h-screen bg-background">

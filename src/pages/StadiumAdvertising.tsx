@@ -29,7 +29,7 @@ const StadiumAdvertising = () => {
       "provider": {
         "@type": "Organization",
         "name": "Media Buying London",
-        "url": "https://www.mediabuyinglondon.co.uk"
+        "url": "https://mediabuyinglondon.co.uk"
       },
       "areaServed": {
         "@type": "City",
@@ -44,7 +44,7 @@ const StadiumAdvertising = () => {
       ],
       "offers": {
         "@type": "Offer",
-        "url": "https://www.mediabuyinglondon.co.uk/ooh/stadium-advertising-london",
+        "url": "https://mediabuyinglondon.co.uk/ooh/stadium-advertising-london",
         "priceCurrency": "GBP",
         "availability": "https://schema.org/InStock"
       }
@@ -190,7 +190,7 @@ const StadiumAdvertising = () => {
           name="description" 
           content="Stadium advertising in London across Wembley, Emirates, Tottenham Hotspur Stadium, Stamford Bridge. LED pitchside boards, big screens, concourse panels. Get quote today." 
         />
-        <link rel="canonical" href="https://reactivemedia.co.uk/ooh/stadium-advertising-london" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <main className="min-h-screen bg-background">

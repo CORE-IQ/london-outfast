@@ -121,7 +121,7 @@ const RoadsideAdvertising = () => {
       <Helmet>
         <title>Roadside Advertising London & UK | 48/96-Sheet, D48 & Street Furniture</title>
         <meta name="description" content="Plan and buy roadside advertising across London & the UK. 48/96-sheet, D48, lamp post banners, phone boxes, street-level ambient. Transparent rates, fast delivery." />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/ooh/roadside-billboards" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
