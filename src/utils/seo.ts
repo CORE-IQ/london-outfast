@@ -128,38 +128,8 @@ export const updateMetaTags = (title: string, description: string, url?: string,
     metaKeywords.setAttribute('content', seoData.keywords.join(', '));
   }
 
-  // Update canonical URL globally — always force .co.uk and fix homepage to '/'
-  const toCoUkCanonical = (input: string) => {
-    try {
-      const base = 'https://mediabuyinglondon.co.uk';
-      const urlObj = new URL(input || '/', base);
-      urlObj.protocol = 'https:';
-      urlObj.hostname = 'mediabuyinglondon.co.uk';
-      urlObj.port = '';
-      // Normalize double slashes after domain
-      return urlObj.toString().replace(/(https:\/\/mediabuyinglondon\.co\.uk)\/{2,}/, '$1/');
-    } catch {
-      // Fallback to current path on .co.uk
-      const path = typeof window !== 'undefined' ? (window.location.pathname || '/') : '/';
-      return `https://mediabuyinglondon.co.uk${path}`;
-    }
-  };
-
-  let canonical = document.querySelector('link[rel="canonical"]');
-  if (!canonical) {
-    canonical = document.createElement('link');
-    canonical.setAttribute('rel', 'canonical');
-    document.head.appendChild(canonical);
-  }
-
-  const base = 'https://mediabuyinglondon.co.uk';
-  const path = typeof window !== 'undefined' ? (window.location.pathname || '/') : '/';
-  const candidate = url || (typeof window !== 'undefined' ? window.location.href : base);
-  let desiredCanonical = toCoUkCanonical(candidate);
-  if (path === '/' || path === '') {
-    desiredCanonical = `${base}/`;
-  }
-  canonical.setAttribute('href', desiredCanonical);
+  // NOTE: Canonical URLs are managed exclusively by SchemaManager via react-helmet-async.
+  // Do NOT manipulate <link rel="canonical"> here.
 
   // Update Open Graph tags
   const ogTitle = document.querySelector('meta[property="og:title"]') || createMetaTag('property', 'og:title');
@@ -190,17 +160,6 @@ export const updateMetaTags = (title: string, description: string, url?: string,
     const twitterImage = document.querySelector('meta[name="twitter:image"]') || createMetaTag('name', 'twitter:image');
     twitterImage.setAttribute('content', seoData.twitter_image);
   }
-
-  // Update structured data
-  let structuredDataScript = document.querySelector('script[type="application/ld+json"]');
-  if (!structuredDataScript) {
-    structuredDataScript = document.createElement('script');
-    structuredDataScript.setAttribute('type', 'application/ld+json');
-    document.head.appendChild(structuredDataScript);
-  }
-  
-  const structuredData = generateStructuredData(null, seoData);
-  structuredDataScript.textContent = JSON.stringify(structuredData);
 };
 
 const createMetaTag = (attrName: string, attrValue: string) => {
@@ -209,27 +168,3 @@ const createMetaTag = (attrName: string, attrValue: string) => {
   document.head.appendChild(meta);
   return meta;
 };
-
-// Enforce canonical on demand (initial load and SPA route changes)
-export function enforceCanonical(href?: string) {
-  const base = 'https://mediabuyinglondon.co.uk';
-  const toCoUk = (input: string) => {
-    const u = new URL(input || '/', base);
-    u.protocol = 'https:';
-    u.hostname = 'mediabuyinglondon.co.uk';
-    u.port = '';
-    return u.toString().replace(/(https:\/\/mediabuyinglondon\.co\.uk)\/{2,}/, '$1/');
-  };
-
-  const path = typeof window !== 'undefined' ? (window.location.pathname || '/') : '/';
-  let desired = href ? toCoUk(href) : toCoUk(typeof window !== 'undefined' ? window.location.href : base);
-  if (path === '/' || path === '') desired = `${base}/`;
-
-  let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-  if (!link) {
-    link = document.createElement('link');
-    link.setAttribute('rel', 'canonical');
-    document.head.appendChild(link);
-  }
-  link.setAttribute('href', desired);
-}
