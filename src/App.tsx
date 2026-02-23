@@ -37,7 +37,7 @@ import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import { trackPageView, initCampaignTracking, trackTelClick } from "@/utils/analytics";
-import { updateMetaTags, enforceCanonical } from "@/utils/seo";
+import "@/utils/seo";
 import EmailTest from "./pages/EmailTest";
 import NoInspect from "@/components/security/NoInspect";
 import HtmlSitemap from "./pages/HtmlSitemap";
@@ -74,15 +74,8 @@ const queryClient = new QueryClient();
 const RouterAnalytics = () => {
   const location = useLocation();
   useEffect(() => { initCampaignTracking(); }, []);
-  // Ensure canonical exists on first paint
-  useEffect(() => { enforceCanonical(); }, []);
   useEffect(() => {
     trackPageView(location.pathname, document.title);
-    const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement)?.content || "London's fastest out-of-home media buying specialists.";
-    const url = new URL(location.pathname + location.search, window.location.origin).toString();
-    updateMetaTags(document.title, metaDesc, url);
-    // Enforce canonical on every client-side route change
-    enforceCanonical(url);
   }, [location.pathname, location.search]);
   return null;
 };
