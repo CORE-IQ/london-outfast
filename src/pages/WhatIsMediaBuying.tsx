@@ -11,7 +11,7 @@ const WhatIsMediaBuying = () => {
           name="description" 
           content="Discover what media buying in London really means. From strategic planning to OOH campaign delivery, Media Buying London sets the standard with transparent rates, speed, and price guarantees." 
         />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/what-is-media-buying-in-london" />
+        {/* Canonical managed by SchemaManager */}
         <meta property="og:title" content="Media Buying in London – The Complete Guide by Media Buying London" />
         <meta property="og:description" content="Discover what media buying in London really means. From strategic planning to OOH campaign delivery, Media Buying London sets the standard with transparent rates, speed, and price guarantees." />
         <meta property="og:image" content="/og/og-media-buying-london.jpg" />

@@ -237,7 +237,7 @@ const OOHHub = () => {
           name="description" 
           content="Explore every OOH advertising environment in London and across the UK. From Tube, bus, and roadside billboards to retail, street, and experiential media — we plan, buy, and deliver campaigns fast at unbeatable rates." 
         />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/ooh" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/5">

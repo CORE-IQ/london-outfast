@@ -134,7 +134,7 @@ const HowWeWork = () => {
         <title>How We Work - Fast, Transparent OOH Media Buying | Media Buying London</title>
         <meta name="description" content="Discover our transparent process: from brief to live campaign in 48 hours. Four entry routes, competitive rates, and audience-driven targeting using industry-leading tools." />
         <meta name="keywords" content="how we work, OOH process, media buying process, London advertising, transparent rates, audience targeting" />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/how-we-work" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <main className="min-h-screen">

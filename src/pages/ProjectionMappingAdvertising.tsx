@@ -29,7 +29,7 @@ const ProjectionMappingAdvertising = () => {
       "provider": {
         "@type": "Organization",
         "name": "Media Buying London",
-        "url": "https://www.mediabuyinglondon.co.uk"
+        "url": "https://mediabuyinglondon.co.uk"
       },
       "areaServed": {
         "@type": "City",
@@ -43,7 +43,7 @@ const ProjectionMappingAdvertising = () => {
       ],
       "offers": {
         "@type": "Offer",
-        "url": "https://www.mediabuyinglondon.co.uk/ooh/projection-mapping-advertising",
+        "url": "https://mediabuyinglondon.co.uk/ooh/projection-mapping-advertising",
         "priceCurrency": "GBP",
         "availability": "https://schema.org/InStock"
       }
@@ -146,7 +146,7 @@ const ProjectionMappingAdvertising = () => {
           name="description" 
           content="Projection mapping advertising in London. Transform iconic buildings into dynamic brand canvases. Tower of London, The Shard, Tate Modern projections. Get quote today." 
         />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/ooh/projection-mapping-advertising" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <main className="min-h-screen bg-background">

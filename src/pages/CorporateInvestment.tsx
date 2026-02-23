@@ -11,7 +11,7 @@ export default function CorporateInvestment() {
       <Helmet>
         <title>Invest in Media Buying London – Corporate Investment</title>
         <meta name="description" content="London proven. Global cities in development. Transparent OOH technology with direct media owner integrations. Round closes 31 October 2025." />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/corporate-investment" />
+        {/* Canonical managed by SchemaManager */}
         <meta property="og:title" content="Invest in Media Buying London – Corporate Investment" />
         <meta property="og:description" content="London proven. Global cities in development. Transparent OOH technology with direct media owner integrations. Round closes 31 October 2025." />
         <meta property="og:url" content="https://mediabuyinglondon.co.uk/corporate-investment" />

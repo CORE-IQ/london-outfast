@@ -29,8 +29,8 @@ const AirportAdvertising = () => {
       "provider": {
         "@type": "Organization",
         "name": "Media Buying London",
-        "url": "https://www.mediabuyinglondon.com",
-        "logo": "https://www.mediabuyinglondon.com/logo.png"
+        "url": "https://mediabuyinglondon.co.uk",
+        "logo": "https://mediabuyinglondon.co.uk/favicon.png"
       },
       "areaServed": {
         "@type": "Place",
@@ -202,7 +202,7 @@ const AirportAdvertising = () => {
           name="description" 
           content="Airport advertising in London targets high-value business travellers, tourists, and affluent frequent flyers. From digital screens to large-format banners, we deliver your brand in front of millions passing through London's major airports every month." 
         />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/ooh/airport-advertising" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <main className="min-h-screen bg-background">

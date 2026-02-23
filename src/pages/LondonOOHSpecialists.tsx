@@ -127,7 +127,7 @@ const LondonOOHSpecialists = () => {
           content="London OOH specialists delivering targeted outdoor advertising campaigns. From billboards to digital screens, campaigns are planned, bought, and delivered at unbeatable market rates." 
         />
         <meta name="keywords" content="London OOH specialists, cheap OOH media London, targeted OOH London, billboard advertising London, outdoor advertising London, OOH campaign management" />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/london-ooh-specialists" />
+        {/* Canonical managed by SchemaManager */}
         
         {/* Open Graph Meta Tags */}
         <meta property="og:title" content="London OOH Specialists | Targeted Outdoor Advertising in London" />

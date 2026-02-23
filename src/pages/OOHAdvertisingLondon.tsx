@@ -130,7 +130,7 @@ const OOHAdvertisingLondon = () => {
       <Helmet>
         <title>{PAGE_TITLE}</title>
         <meta name="description" content={META_DESCRIPTION} />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/ooh-advertising-london" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <div className="min-h-screen">

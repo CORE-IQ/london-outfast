@@ -150,7 +150,7 @@ const LondonUndergroundAdvertising = () => {
           name="description" 
           content="Command attention inside London's iconic transport network. 4+ million daily passengers across 270+ stations. Expert planning, strategic placement, proven ROI."
         />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/ooh/london-underground" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <main className="min-h-screen bg-background">

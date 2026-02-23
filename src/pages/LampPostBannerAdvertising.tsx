@@ -174,7 +174,7 @@ const LampPostBannerAdvertising = () => {
           name="description" 
           content="Lamp post banner advertising offers high-visibility, street-level exposure across London's busiest roads, shopping districts, and community areas. Perfect for local events, seasonal campaigns, and brand awareness." 
         />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/ooh/lamp-post-banner-advertising" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <main className="min-h-screen bg-background">

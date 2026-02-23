@@ -152,7 +152,7 @@ const RailAdvertisingLondon = () => {
           name="description" 
           content="Target affluent commuter audiences with Rail Advertising across London's National Rail and Overground network. From 6 Sheet posters to full station takeovers, we deliver data-driven, transparent, and competitive campaigns."
         />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/ooh/rail-advertising-london" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <main className="min-h-screen bg-background">

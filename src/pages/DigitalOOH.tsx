@@ -137,7 +137,7 @@ const DigitalOOH = () => {
         <title>Digital OOH London | Programmatic DOOH Campaign Planning</title>
         <meta name="description" content="Dynamic, data-driven outdoor advertising across London's premium digital screens. D48, Mega 6, digital bus shelters, and programmatic DOOH with real-time targeting." />
         <meta name="keywords" content="digital ooh london, programmatic dooh, D48, mega 6, digital bus shelters, underground digital, london digital advertising" />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/ooh/digital-ooh" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">

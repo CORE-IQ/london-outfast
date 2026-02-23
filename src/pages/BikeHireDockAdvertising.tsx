@@ -176,7 +176,7 @@ const BikeHireDockAdvertising = () => {
           name="description" 
           content="Bike hire dock advertising offers a unique way to reach London's active, eco-conscious audience. Positioned at Santander Cycles docking stations across all 32 boroughs for high-frequency, hyper-local brand exposure." 
         />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/ooh/bike-hire-dock-advertising" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <main className="min-h-screen bg-background">

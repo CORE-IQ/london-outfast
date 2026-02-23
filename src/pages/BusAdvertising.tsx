@@ -143,7 +143,7 @@ const BusAdvertising = () => {
         <title>Bus Advertising London | TfL OOH Campaign Planning</title>
         <meta name="description" content="Buy and plan bus advertising in London. Mega rears, streetliners, supersides & interiors. Audience-driven planning with transparent, unmarked rates." />
         <meta name="keywords" content="bus advertising london, TfL bus ads, mega rear, streetliner, bus campaign planning, london bus advertising" />
-        <link rel="canonical" href="https://mediabuyinglondon.co.uk/ooh/bus-advertising" />
+        {/* Canonical managed by SchemaManager */}
       </Helmet>
 
       <div className="min-h-screen bg-background">
