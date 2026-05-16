@@ -8,6 +8,15 @@ import { HelmetProvider } from "react-helmet-async";
 import { MediaFormatsProvider } from "@/components/providers/MediaFormatsProvider";
 import { SchemaManager } from "@/components/SchemaManager";
 import { CanonicalRedirect } from "@/components/CanonicalRedirect";
+import { NoIndex } from "@/components/NoIndex";
+
+// Wrap routes that should NOT appear in search results (admin, auth, transactional, internal).
+const Private = ({ children }: { children: React.ReactNode }) => (
+  <>
+    <NoIndex />
+    {children}
+  </>
+);
 
 import SiteShell from "@/components/layout/SiteShell";
 import { ScrollToTop } from "@/components/ScrollToTop";
