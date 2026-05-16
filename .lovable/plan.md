@@ -1,65 +1,87 @@
-## What Google Search Console is actually telling us
+## What the data confirms
 
-From your screenshot:
+You answered: **hosted via 123-reg (registrar) → Lovable (Cloudflare) hosting**. I just tested live and:
 
-| Reason | Pages | What it means |
+- `www.mediabuyinglondon.co.uk/how-we-work` → **HTTP 200** (should be 301 to non-www). The `.htaccess` rules in `public/.htaccess` and `public/ooh/.htaccess` are dead code — Lovable's Cloudflare-fronted hosting does not run Apache.
+- `mediabuyinglondon.co.uk/cms` → **HTTP 200**, fully indexable.
+
+Cross-referencing the 85-URL GSC list you pasted:
+
+| Problem | Count | Examples |
 |---|---|---|
-| Crawled – currently not indexed | **85** | Google fetched the page, decided it wasn't worth indexing (almost always: thin content or duplicate to something already indexed) |
-| Discovered – currently not indexed | **41** | Google knows the URL exists but hasn't even bothered fetching it (low quality signal for the whole site) |
-| Duplicate without user-selected canonical | 15 | Multiple URLs serve the same content, no canonical resolves the tie |
-| Alternative page with proper canonical tag | 14 | These pages exist but correctly point elsewhere — usually fine |
-| Page with redirect | 6 | Fine |
-| Duplicate, Google chose different canonical than user | 2 | Our declared canonical is being overruled |
-| Soft 404 | 1 | Page returns 200 but looks empty |
+| **`www.` variant being crawled & indexed** | ~25 | `www.mediabuyinglondon.co.uk/outdoor-media/shopping-centre-advertising`, `/ooh/stadium-advertising-london`, `/what-is-media-buying`, etc. |
+| **Admin / internal pages indexable** | 3 | `/cms`, `/configurator`, `/brief-plan` |
+| **Sitemaps treated as HTML pages** | 2 | `/sitemap`, `/sitemap-blog.xml` |
+| **Legacy URL `/what-is-media-buying`** | 2 | Already supposed to redirect to `/what-is-media-buying-in-london` but redirect is JS-only |
+| **Nested ghost URL `/outdoor-media/industries/*`** | 2 | `/outdoor-media/industries/retail`, `/outdoor-media/industries/technology` — likely no real route |
+| **Genuine thin SPA pages** | ~50 | The rest |
 
-**Diagnosis:** This is not "SEO fell off" — Google is actively *refusing* to index the site. The two root causes:
+So the real root causes, in order of impact:
 
-1. **The site is a client-rendered React SPA.** When Googlebot fetches any URL, it gets the same near-empty `index.html` shell. JS rendering happens later, sometimes never. Result: every URL looks like the same thin page → "Crawled, not indexed" en masse.
-2. **Historical canonical/domain churn.** Until recently the codebase had hardcoded canonicals pointing at `reactivemedia.co.uk`, `www.mediabuyinglondon.com`, `www.mediabuyinglondon.co.uk` and `ooh.mediabuyinglondon.co.uk` mixed in across pages. We cleaned those up over the last few prompts, but Google still has the old signals cached.
+1. **No server-level www→non-www redirect** (Cloudflare needs a Page Rule / Redirect Rule). This alone accounts for ~25 of the 85.
+2. **Admin/internal pages have no `noindex`** and aren't blocked in robots.txt.
+3. **Pages are JS-shell HTML** to Googlebot → "Crawled, currently not indexed" for the rest.
 
-You were "ranking #1 for everything" at launch because there was almost no competition for your brand name and Google was still discovering the site. Once it started crawling deeply, it found a wall of thin/duplicate pages and pulled back.
+## Plan
 
-## Plan (in priority order)
+### Step 1 — Block admin/internal pages from indexing (5 min, ship immediately)
 
-### Step 1 — Make the HTML not be empty (highest impact)
+In code (I can do this now):
+- Add `<meta name="robots" content="noindex, nofollow" />` via Helmet on `/cms`, `/configurator`, `/brief-plan`, `/brief-submitted`, `/account-created`, `/email-test`, `/thank-you`, `/auth`, `/create-account`, `/client-portal`.
+- Update `public/robots.txt` to add:
+  ```
+  Disallow: /cms
+  Disallow: /configurator
+  Disallow: /auth
+  Disallow: /client-portal
+  Disallow: /thank-you
+  Disallow: /email-test
+  ```
 
-Add build-time prerendering so every public route ships as fully-rendered HTML, not a JS shell. This is the single change that will fix "Crawled – currently not indexed" at scale.
+### Step 2 — Add server-level redirects in Cloudflare (you do this, 5 min)
 
-- Install `vite-plugin-prerender-spa` (or `react-snap` as a postbuild step).
-- Configure it with the list of indexable routes from `src/App.tsx` (home, `/outdoor-media`, `/outdoor-media/:slug`, `/industries/:slug`, `/ooh`, `/ooh/:slug`, `/london-ooh-specialists`, `/london-ooh-deals`, `/ooh-advertising-london`, `/media-buying-rates-london`, `/what-is-media-buying-in-london`, `/how-we-work`, `/about`, `/contact`, `/faqs`, `/blog`, `/blog/:slug`).
-- For dynamic routes (`:slug`), pull the slug list from Supabase at build time the same way `scripts/generate-sitemap.ts` would.
-- Verify the built `dist/` contains real `<h1>`, paragraphs, and meta tags per route.
+This is the single biggest fix. The `.htaccess` files do nothing. You need to set this up once in the Cloudflare dashboard that Lovable provisions for your domain:
 
-This alone typically moves 50–80% of "Crawled, not indexed" pages back into the index within 2–4 weeks.
+**Option A (preferred) — Cloudflare Redirect Rule:**
+- Cloudflare dashboard → your domain → Rules → Redirect Rules → Create
+- Rule 1: If `hostname equals www.mediabuyinglondon.co.uk` → 301 to `https://mediabuyinglondon.co.uk/$1` preserving path
+- Rule 2: If `hostname equals ooh.mediabuyinglondon.co.uk` → 301 to `https://mediabuyinglondon.co.uk/$1`
 
-### Step 2 — Eliminate the duplicate-canonical signals
+If you don't have access to that Cloudflare dashboard (Lovable manages it), the fastest fallback is to **remove the `www` and `ooh` subdomains from DNS at 123-reg** so they stop resolving at all. Google will eventually drop those URLs.
 
-- Audit the 17 pages flagged as duplicate / alternative-canonical issues. Get the exact URL list from GSC → Pages → click each row → Export.
-- For each, confirm `SchemaManager` emits exactly one `<link rel="canonical">` pointing at the `https://mediabuyinglondon.co.uk/...` version (View Source of the production page, not DevTools — DevTools shows post-JS state).
-- Verify the `.htaccess` 301s in `public/.htaccess` and `public/ooh/.htaccess` are actually executing on the host. **Lovable hosting does not run Apache `.htaccess`** — if the site is published on Lovable, those rules do nothing and the JS `CanonicalRedirect.tsx` is the only thing redirecting `www` / `ooh` traffic. That's too late for Googlebot, which indexes the source URL before JS runs. We need either: (a) server-level redirects from whatever host the custom domain points at, or (b) keep all variants pointing at the canonical via DNS-level redirects.
+I'll also delete the misleading `.htaccess` files and add an in-app guard: a top-level `<meta http-equiv="refresh">` injected when hostname is `www.` or `ooh.` (better than nothing, but server redirects above are the real fix).
 
-### Step 3 — Kill the soft 404
+### Step 3 — Add build-time prerendering (you approved)
 
-One page returns 200 but looks empty to Google. Once we get the URL from GSC we'll either add real content or `noindex` it.
+Install `react-snap` as a postbuild step (more reliable than `vite-plugin-prerender-spa` for this stack — it uses headless Chrome to render every route and write static HTML).
 
-### Step 4 — Beef up the "Discovered – not indexed" 41
+- `bun add -D react-snap`
+- Add `"postbuild": "react-snap"` to package.json
+- Configure `reactSnap.include` with the route list (static + dynamic slugs fetched at build time from Supabase: media_formats, industries, blog posts, OOH formats).
+- Switch `createRoot` → `hydrateRoot` when prerendered HTML is detected (react-snap's standard requirement).
+- Verify `dist/outdoor-media/48-sheet-billboard/index.html` contains a real `<h1>` and paragraphs after build.
 
-These 41 URLs Google won't even crawl because the site's overall quality signal is low. Step 1 (prerendering) is the main fix; supplement with:
+After this ships, every URL Googlebot fetches will have full HTML, killing the "Crawled – currently not indexed" wave at scale.
 
-- Internal links from the homepage to every hub page, and from each hub page to its children.
-- Make sure each of these 41 pages has unique, substantive content (≥600 words of real info, not boilerplate).
-- Request indexing for the top 10 via GSC URL Inspection after Step 1 ships.
+### Step 4 — Fix the orphan/ghost URLs
 
-### Step 5 — Resubmit and monitor
+- `/outdoor-media/industries/retail` and `/outdoor-media/industries/technology` — find and either route them properly or return a 404 / `noindex`.
+- Remove `/sitemap` (no extension) from being routable as a page — the sitemap is `/sitemap.xml`.
+- Confirm `/configurator` and legacy `/what-is-media-buying` are removed from all sitemaps.
 
-- Resubmit all 7 sitemaps in GSC.
-- Use GSC's "Validate fix" button on each row in your screenshot once Steps 1–3 are deployed.
-- Recovery: 2–6 weeks for crawled-not-indexed; 4–12 weeks for discovered-not-indexed.
+### Step 5 — Resubmit & monitor (you, in GSC)
 
-## What I need from you to start
+- Validate fix on all rows in your screenshot.
+- Resubmit `sitemap.xml`.
+- Recovery: 2–6 weeks for crawled-not-indexed once Steps 1–3 ship.
 
-Three quick answers and I'll start on Step 1:
+## What I'll build right now in this turn
 
-1. **Hosting:** Is the custom domain `mediabuyinglondon.co.uk` served by Lovable hosting, or have you pointed it at a different host (Cloudflare, Vercel, Apache server)? This determines whether the `.htaccess` files actually do anything.
-2. **Prerender scope:** OK to prerender ~30 routes at build time? Adds 30–90s to publish time but is the single biggest SEO win available.
-3. **Export the GSC URL lists** (the 85 + 41 + 15 lists). Paste them or attach the CSV exports — I need the exact URLs to fix the right pages instead of guessing.
+If you flip me to build mode:
+1. Step 1 in full (noindex meta + robots.txt updates).
+2. Step 3 in full (react-snap setup + hydrateRoot switch + build-time slug fetcher).
+3. Step 4 (404/noindex the ghost URLs, remove `/sitemap` route if it exists).
+4. Delete the dead `.htaccess` files so we don't keep maintaining them.
+5. Add a JS hostname guard as a stopgap until you do Step 2 in Cloudflare.
+
+Step 2 you have to do yourself in the Cloudflare dashboard — I cannot reach it from here. Once you've done it, I'll re-test the headers and confirm 301s are firing.

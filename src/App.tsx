@@ -8,6 +8,15 @@ import { HelmetProvider } from "react-helmet-async";
 import { MediaFormatsProvider } from "@/components/providers/MediaFormatsProvider";
 import { SchemaManager } from "@/components/SchemaManager";
 import { CanonicalRedirect } from "@/components/CanonicalRedirect";
+import { NoIndex } from "@/components/NoIndex";
+
+// Wrap routes that should NOT appear in search results (admin, auth, transactional, internal).
+const Private = ({ children }: { children: React.ReactNode }) => (
+  <>
+    <NoIndex />
+    {children}
+  </>
+);
 
 import SiteShell from "@/components/layout/SiteShell";
 import { ScrollToTop } from "@/components/ScrollToTop";
@@ -117,18 +126,18 @@ const App = () => {
             <SiteShell>
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/hometest1" element={<HomeTest1 />} />
-                <Route path="/hometest2" element={<HomeTest2 />} />
+                <Route path="/hometest1" element={<Private><HomeTest1 /></Private>} />
+                <Route path="/hometest2" element={<Private><HomeTest2 /></Private>} />
                 <Route path="/brief" element={<Brief />} />
                 <Route path="/quote" element={<Brief />} />
-                <Route path="/quote-plan" element={<BriefPlan />} />
-                <Route path="/brief-plan" element={<BriefPlan />} />
-                <Route path="/quote-submitted" element={<BriefSubmitted />} />
-                <Route path="/brief-submitted" element={<BriefSubmitted />} />
-                <Route path="/create-account" element={<CreateAccount />} />
-                <Route path="/account-created" element={<AccountCreated />} />
-                <Route path="/client-portal" element={<ClientPortal />} />
-                <Route path="/configurator" element={<Brief />} />
+                <Route path="/quote-plan" element={<Private><BriefPlan /></Private>} />
+                <Route path="/brief-plan" element={<Private><BriefPlan /></Private>} />
+                <Route path="/quote-submitted" element={<Private><BriefSubmitted /></Private>} />
+                <Route path="/brief-submitted" element={<Private><BriefSubmitted /></Private>} />
+                <Route path="/create-account" element={<Private><CreateAccount /></Private>} />
+                <Route path="/account-created" element={<Private><AccountCreated /></Private>} />
+                <Route path="/client-portal" element={<Private><ClientPortal /></Private>} />
+                <Route path="/configurator" element={<Private><Brief /></Private>} />
                 <Route path="/formats" element={<RedirectToFormatDirectory />} />
                 <Route path="/outdoor-media" element={<FormatDirectory />} />
                 <Route path="/outdoor-media/:formatSlug" element={<FormatPage />} />
@@ -141,12 +150,12 @@ const App = () => {
                 <Route path="/faqs" element={<FAQs />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/how-we-work" element={<HowWeWork />} />
-                <Route path="/thank-you" element={<ThankYou />} />
+                <Route path="/thank-you" element={<Private><ThankYou /></Private>} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/email-test" element={<EmailTest />} />
-                <Route path="/cms" element={<ProtectedRoute><CMS /></ProtectedRoute>} />
+                <Route path="/auth" element={<Private><Auth /></Private>} />
+                <Route path="/email-test" element={<Private><EmailTest /></Private>} />
+                <Route path="/cms" element={<Private><ProtectedRoute><CMS /></ProtectedRoute></Private>} />
                 <Route path="/corporate-investment" element={<CorporateInvestment />} />
                 <Route path="/ooh" element={<OOHHub />} />
                 <Route path="/ooh/taxi-advertising" element={<TaxiAdvertising />} />
